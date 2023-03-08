@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\emilw\\Library\\Library.csproj": {}
+    "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj": {}
   },
   "projects": {
-    "C:\\Users\\emilw\\Library\\Library.csproj": {
+    "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\emilw\\Library\\Library.csproj",
+        "projectUniqueName": "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj",
         "projectName": "Library",
-        "projectPath": "C:\\Users\\emilw\\Library\\Library.csproj",
-        "packagesPath": "C:\\Users\\emilw\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emilw\\Library\\obj\\",
+        "projectPath": "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj",
+        "packagesPath": "C:\\Users\\emil.wallman\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\emil.wallman\\Library\\Library\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\emilw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\emil.wallman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -45,35 +49,16 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.32, 3.1.32]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     }
