@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emil.wallman\\source\\repos\\Library\\Library.csproj",
+      "projectUniqueName": "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj",
       "projectName": "Library",
-      "projectPath": "C:\\Users\\emil.wallman\\source\\repos\\Library\\Library.csproj",
+      "projectPath": "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj",
       "packagesPath": "C:\\Users\\emil.wallman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emil.wallman\\source\\repos\\Library\\obj\\",
+      "outputPath": "C:\\Users\\emil.wallman\\Library\\Library\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
