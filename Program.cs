@@ -20,8 +20,8 @@ namespace library
             this.ssn = ssn;
         }
     }
-    //test
-    //test igen från stor dator
+    
+
     class LoginSite
     {
         private List<User> users;
@@ -162,7 +162,6 @@ namespace library
 
             Console.WriteLine("Account created successfully.");
 
-            Thread.Sleep(1000);
 
             Console.Clear();
         }
