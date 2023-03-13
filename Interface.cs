@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
+using library;
 
 /*
 To Do:
-Admin kan byta lösenord
-Lägga till Böcker
+Ta Bort användare
+Användare ska kunna ändra sina lösenord
 Ta bort Böcker
 Låna Böcker
 Lämna tillbaka Böker
@@ -16,32 +17,26 @@ Reservera Böcker
 Lägg till Console.Clear
 Lägg till Thread.Sleep
 Koppla ihop två filer
+Ändra alla namn till interface osv
+En klass för AdminMenu
+En klass för User
+En klass för loggin o skapa konto osv (start meny)
+En klass för Bibliotek
+
  */
 
 namespace library
 {
-    class User
-    {
-        public string username;
-        public string password;
-        public string ssn;
-        public bool isAdmin;
 
-
-        public User(string username, string password, string ssn, bool isAdmin)
-        {
-            this.username = username;
-            this.password = password;
-            this.isAdmin = isAdmin;
-            this.ssn = ssn;
-        }
-    }
     
 
-    class LoginSite
+    public class LoginSite
     {
-        private List<User> users;
-        private User currentUser;
+        Library library = new Library();
+        public List<User> users;
+        public User currentUser;
+
+
 
         public LoginSite()
         {
@@ -243,7 +238,7 @@ namespace library
             }
         }
 
-        private void AdminMenu()
+        public void AdminMenu()
         {
             Console.WriteLine("1. Change User Status");
             Console.WriteLine("2. Logout");
@@ -276,7 +271,12 @@ namespace library
                     Console.WriteLine("Logging out...");
                     return;
                 case 3:
+                    //Go to Library Start in some way
 
+                    
+                    library.AdminLibrary();
+
+                    return; 
                 case 4:
                     
 
@@ -339,7 +339,7 @@ namespace library
             return null;
         }
 
-        private void LoadUsers()
+        public void LoadUsers()
         {
             if (!File.Exists("users.txt"))
             {
@@ -371,15 +371,5 @@ namespace library
         }
 
     }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            LoginSite loginSite = new LoginSite();
-            loginSite.Start();
-        }
-    }
-
 }
 
