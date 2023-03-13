@@ -1,2 +1,3 @@
 Admin,admin,1000,True
-Emil,123,040525,False
+Emil,321,040525,True
+Test,test,123,False
