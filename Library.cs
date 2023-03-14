@@ -33,7 +33,8 @@ namespace library
             Console.WriteLine("1. Add Books");
             Console.WriteLine("2. Delete Books");
             Console.WriteLine("3. List all books");
-            Console.WriteLine("4. Back");
+            Console.WriteLine("4. Search for Books");
+            Console.WriteLine("5. Back");
 
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
@@ -56,6 +57,29 @@ namespace library
                     break;
 
                 case 4:
+                    Console.Write("Enter the book you want to search for: ");
+                    string search = Console.ReadLine();
+
+                    List<Book> matchedBooks = SearchBooks(search);
+
+                    if (matchedBooks.Count == 0)
+                    {
+                        Console.WriteLine("No books found matching the search query.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} books found matching the search query:", matchedBooks.Count);
+                        foreach (Book book in matchedBooks)
+                        {
+                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nStatus: {3}\n", book.title, book.author, book.genre, book.status);
+                        }
+                    }
+
+
+
+                    break;
+
+                case 5:
                     Interface loginSite = new Interface();
                     loginSite.AdminMenu();
 
@@ -150,6 +174,61 @@ namespace library
             }
             File.WriteAllLines("books.txt", lines);
         }
+
+        public List<Book> SearchBooks(string searchTerm)
+        {
+            const int MAX_DISTANCE = 2; // Maximum Levenshtein distance for a match
+
+            // Search for books that match the search term in the title, author, or genre
+            List<Book> matchingBooks = books.Where(b =>
+                b.title.ToLower().Contains(searchTerm.ToLower()) ||
+                b.author.ToLower().Contains(searchTerm.ToLower()) ||
+                b.genre.ToLower().Contains(searchTerm.ToLower())
+            ).ToList();
+
+            // Search for close matches using Levenshtein distance
+            foreach (Book book in books)
+            {
+                int distance = ComputeLevenshteinDistance(book.title.ToLower(), searchTerm.ToLower());
+                if (distance <= MAX_DISTANCE && !matchingBooks.Contains(book))
+                {
+                    matchingBooks.Add(book);
+                }
+            }
+
+            return matchingBooks;
+        }
+
+        private static int ComputeLevenshteinDistance(string s, string t)
+        {
+            int[,] d = new int[s.Length + 1, t.Length + 1];
+
+            for (int i = 0; i <= s.Length; i++)
+            {
+                d[i, 0] = i;
+            }
+
+            for (int j = 0; j <= t.Length; j++)
+            {
+                d[0, j] = j;
+            }
+
+            for (int j = 1; j <= t.Length; j++)
+            {
+                for (int i = 1; i <= s.Length; i++)
+                {
+                    int substitutionCost = (s[i - 1] == t[j - 1]) ? 0 : 1;
+
+                    d[i, j] = Math.Min(Math.Min(
+                        d[i - 1, j] + 1,      // Deletion
+                        d[i, j - 1] + 1),     // Insertion
+                        d[i - 1, j - 1] + substitutionCost); // Substitution
+                }
+            }
+
+            return d[s.Length, t.Length];
+        }
+
     }
 }
 

@@ -68,6 +68,7 @@ namespace library
                         CreateAccount();
                         break;
                     case 3:
+                        System.Environment.Exit(0);
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Try again.");
@@ -278,6 +279,7 @@ namespace library
 
                 case 4:
                     Console.WriteLine("Logging out...");
+                    Start();
                     return;
 
                 default:
@@ -291,7 +293,7 @@ namespace library
         }
         private void DeleteUser()
         {
-
+            
         }
 
         private void UserMenu(string username)
