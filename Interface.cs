@@ -289,6 +289,10 @@ namespace library
 
             AdminMenu();
         }
+        private void DeleteUser()
+        {
+
+        }
 
         private void UserMenu(string username)
         {
