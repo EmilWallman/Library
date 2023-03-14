@@ -92,6 +92,7 @@ namespace library
             AdminLibrary();
         }
 
+        //denna e TOM ***** 
         public void UserLibrary()
         {
 
@@ -128,12 +129,12 @@ namespace library
             string author = Console.ReadLine();
             Console.Write("Enter the Genre: ");
             string genre = Console.ReadLine();
-
+            int ssnUser = 0;
 
 
             Console.WriteLine();
 
-            Book book = new Book(id, title, author, genre, true);
+            Book book = new Book(id, title, author, genre, true, ssnUser);
             books.Add(book);
             SaveBooks();
 
@@ -158,8 +159,9 @@ namespace library
                 string author = parts[2];
                 string genre = parts[3];
                 bool status = bool.Parse(parts[4]);
+                int ssnUser = int.Parse(parts[5]);
 
-                Book book = new Book(id, title, author, genre, status);
+                Book book = new Book(id, title, author, genre, status, ssnUser);
                 books.Add(book);
                 
             }
@@ -170,7 +172,7 @@ namespace library
             List<string> lines = new List<string>();
             foreach (Book book in books) 
             { 
-                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre + "," + book.status);
+                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre + "," + book.status + "," + book.ssnUser);
             }
             File.WriteAllLines("books.txt", lines);
         }
@@ -228,6 +230,40 @@ namespace library
 
             return d[s.Length, t.Length];
         }
+
+
+        /*
+        public void LoadBookUser()
+        {
+            if (!File.Exists("booksUser.txt"))
+            {
+                return;
+            }
+
+            string[] lines = File.ReadAllLines("booksUser.txt");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                int id = int.Parse(parts[0]);
+                bool inLine = bool.Parse(parts[1]);
+                int ssn = int.Parse(parts[2]);
+                int placeInLine = int.Parse(parts[3]);
+
+                BookUser bookUser = new BookUser(id, ssn, placeInLine);
+
+
+            }
+        }
+
+        public void SaveBookUser()
+        {
+            List<string> lines = new List<string>();
+            foreach (BookUser bookUser in booksUser)
+            {
+                lines.Add()
+            }
+        }
+        */
 
     }
 }
