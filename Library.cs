@@ -16,7 +16,7 @@ namespace library
     public class Library
     {
         //Create a link between this and the interface
-        LoginSite loginSite = new LoginSite();
+        
 
 
         public List<Book> books;
@@ -30,7 +30,42 @@ namespace library
 
         public void AdminLibrary()
         {
-            AddBooks();
+            Console.WriteLine("1. Add Books");
+            Console.WriteLine("2. Delete Books");
+            Console.WriteLine("3. List all books");
+            Console.WriteLine("4. Back");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    AddBooks();
+                    break;
+
+                case 2:
+                    Console.Write("Enter the title of the book that you want to delete: ");
+                    string title = Console.ReadLine();
+
+                    DeleteBooks(title);
+                    break;
+                case 3:
+                    //List of all books
+
+                    break;
+
+                case 4:
+                    Interface loginSite = new Interface();
+                    loginSite.AdminMenu();
+
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            AdminLibrary();
         }
 
         public void UserLibrary()
@@ -38,8 +73,25 @@ namespace library
 
         }
 
+        public void DeleteBooks(string title)
+        {
+            Book bookToDelete = books.Find(b => b.title == title);
 
-        private void AddBooks()
+            if (bookToDelete != null)
+            {
+                books.Remove(bookToDelete);
+                SaveBooks();
+
+                Console.WriteLine("Book with title '{0}' deleted successfully.", title);
+            }
+
+            else
+            {
+                Console.WriteLine("Book with title '{0}' not found.", title);
+            }
+        }
+
+        public void AddBooks()
         {
 
             //Makes it so that the next book gest a higher ID

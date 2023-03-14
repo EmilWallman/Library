@@ -2,3 +2,4 @@ Admin,admin,1000,True
 Emil,321,040525,True
 Test,1234,123,False
 emma,12345,1234,True
+test,LOL,100,False
