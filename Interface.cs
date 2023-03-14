@@ -291,6 +291,8 @@ namespace library
 
             AdminMenu();
         }
+
+        //Denna e TOM LÖS DE FÖRFAN
         private void DeleteUser()
         {
             
