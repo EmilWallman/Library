@@ -30,15 +30,15 @@ namespace library
 
     
 
-    public class LoginSite
+    public class Interface
     {
-        Library library = new Library();
+        
         public List<User> users;
         public User currentUser;
 
 
 
-        public LoginSite()
+        public Interface()
         {
             users = new List<User>();
             LoadUsers();
@@ -46,6 +46,8 @@ namespace library
 
         public void Start()
         {
+            
+
             Console.WriteLine("Welcome to the Login Site");
 
             while (true)
@@ -66,6 +68,7 @@ namespace library
                         CreateAccount();
                         break;
                     case 3:
+                        System.Environment.Exit(0);
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Try again.");
@@ -74,12 +77,9 @@ namespace library
             }
         }
 
-        public string ChangePasword()
+        public void ChangePasword(string username)
         {
-            ListAllUsers();
-
-            Console.WriteLine("What user do you want to change the password for?");
-            string username = Console.ReadLine();
+            
 
             
 
@@ -113,16 +113,11 @@ namespace library
 
                     user.password = newPassword;
                     Console.WriteLine($"Password for {username} has been updated.");
-                    
+
                     SaveUsers();
-
-                    return newPassword;
-                    
-
                 }
             }
             Console.WriteLine($"User with username {username} does not exist.");
-            return "1";
         }
 
         private void Login()
@@ -169,7 +164,7 @@ namespace library
                     else
                     {
                         Console.WriteLine("Welcome, " + username + ".");
-                        UserMenu();
+                        UserMenu(username);
                     }
                     return;
                 }
@@ -241,9 +236,10 @@ namespace library
         public void AdminMenu()
         {
             Console.WriteLine("1. Change User Status");
-            Console.WriteLine("2. Logout");
+            Console.WriteLine("2. Change User Password");
             Console.WriteLine("3. Edit library");
-            Console.WriteLine("4. Change User Password");
+            Console.WriteLine("4. Logout");
+            
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
 
@@ -267,23 +263,23 @@ namespace library
                     }
 
                     break;
+
                 case 2:
-                    Console.WriteLine("Logging out...");
+                    ListAllUsers();
+                    Console.WriteLine("What user do you want to change the password for?");
+                    string usernameChoise = Console.ReadLine();
+                    ChangePasword(usernameChoise);
                     return;
+
                 case 3:
-                    //Go to Library Start in some way
-
-                    
+                    //Going to the library
+                    Library library = new Library();
                     library.AdminLibrary();
+                    return;
 
-                    return; 
                 case 4:
-                    
-
-                    string newPassword = ChangePasword();
-                    
-                    
-
+                    Console.WriteLine("Logging out...");
+                    Start();
                     return;
 
                 default:
@@ -291,15 +287,21 @@ namespace library
                     break;
             }
 
-
+            
 
             AdminMenu();
         }
-
-        private void UserMenu()
+        private void DeleteUser()
         {
-            Console.WriteLine("1. Logout");
+            
+        }
 
+        private void UserMenu(string username)
+        {
+            
+
+            Console.WriteLine("1. Logout");
+            Console.WriteLine("2. Change password");
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
 
@@ -308,11 +310,14 @@ namespace library
                 case 1:
                     Console.WriteLine("Logging out...");
                     return;
+                case 2:
+                    ChangePasword(username);
+                    return;
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
                     break;
             }
-            UserMenu();
+            UserMenu(username);
         }
 
         private User GetUserByUsername(string username)

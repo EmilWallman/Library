@@ -7,7 +7,7 @@ namespace library
         static void Main(string[] args)
         {
             Library library = new Library();
-            LoginSite loginSite = new LoginSite();
+            Interface loginSite = new Interface();
             loginSite.Start();
 
         }
