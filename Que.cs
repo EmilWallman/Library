@@ -15,7 +15,7 @@ namespace library
             this.ssn = ssn;
             this.placeInLine = placeInLine;
         }
-
+        
     }
 
 }

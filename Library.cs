@@ -256,10 +256,11 @@ namespace library
         public void SaveBookUser()
         {
             List<string> lines = new List<string>();
-            foreach (BookUser bookUser in booksUser)
+            foreach (Que que in queues)
             {
-                lines.Add()
+                lines.Add(que.id + "," + que.ssn + "," + que.placeInLine);
             }
+            File.WriteAllLines("que.txt", lines);
         }
         
 
