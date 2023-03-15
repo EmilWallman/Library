@@ -20,10 +20,11 @@ namespace library
 
 
         public List<Book> books;
-        
+        public List<Que> queues;
 
         public Library()
         {
+            queues = new List<Que>();
             books = new List<Book>();
             LoadBooks();
         }
@@ -230,27 +231,24 @@ namespace library
 
             return d[s.Length, t.Length];
         }
-
-
-        /*
-        public void LoadBookUser()
+        
+        public void LoadQue()
         {
-            if (!File.Exists("booksUser.txt"))
+            if (!File.Exists("que.txt"))
             {
                 return;
             }
 
-            string[] lines = File.ReadAllLines("booksUser.txt");
+            string[] lines = File.ReadAllLines("que.txt");
             foreach (string line in lines)
             {
                 string[] parts = line.Split(',');
                 int id = int.Parse(parts[0]);
-                bool inLine = bool.Parse(parts[1]);
-                int ssn = int.Parse(parts[2]);
-                int placeInLine = int.Parse(parts[3]);
+                int ssn = int.Parse(parts[1]);
+                int placeInLine = int.Parse(parts[2]);
 
-                BookUser bookUser = new BookUser(id, ssn, placeInLine);
-
+                Que que = new Que (id, ssn, placeInLine);
+                queues.Add(que);
 
             }
         }
@@ -263,7 +261,7 @@ namespace library
                 lines.Add()
             }
         }
-        */
+        
 
     }
 }
