@@ -20,10 +20,11 @@ namespace library
 
 
         public List<Book> books;
-        
+        public List<Que> queues;
 
         public Library()
         {
+            queues = new List<Que>();
             books = new List<Book>();
             LoadBooks();
         }
@@ -92,6 +93,7 @@ namespace library
             AdminLibrary();
         }
 
+        //denna e TOM ***** 
         public void UserLibrary()
         {
 
@@ -128,12 +130,12 @@ namespace library
             string author = Console.ReadLine();
             Console.Write("Enter the Genre: ");
             string genre = Console.ReadLine();
-
+            int ssnUser = 0;
 
 
             Console.WriteLine();
 
-            Book book = new Book(id, title, author, genre, true);
+            Book book = new Book(id, title, author, genre, true, ssnUser);
             books.Add(book);
             SaveBooks();
 
@@ -158,8 +160,9 @@ namespace library
                 string author = parts[2];
                 string genre = parts[3];
                 bool status = bool.Parse(parts[4]);
+                int ssnUser = int.Parse(parts[5]);
 
-                Book book = new Book(id, title, author, genre, status);
+                Book book = new Book(id, title, author, genre, status, ssnUser);
                 books.Add(book);
                 
             }
@@ -170,7 +173,7 @@ namespace library
             List<string> lines = new List<string>();
             foreach (Book book in books) 
             { 
-                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre + "," + book.status);
+                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre + "," + book.status + "," + book.ssnUser);
             }
             File.WriteAllLines("books.txt", lines);
         }
@@ -228,6 +231,38 @@ namespace library
 
             return d[s.Length, t.Length];
         }
+        
+        public void LoadQue()
+        {
+            if (!File.Exists("que.txt"))
+            {
+                return;
+            }
+
+            string[] lines = File.ReadAllLines("que.txt");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                int id = int.Parse(parts[0]);
+                int ssn = int.Parse(parts[1]);
+                int placeInLine = int.Parse(parts[2]);
+
+                Que que = new Que (id, ssn, placeInLine);
+                queues.Add(que);
+
+            }
+        }
+
+        public void SaveBookUser()
+        {
+            List<string> lines = new List<string>();
+            foreach (Que que in queues)
+            {
+                lines.Add(que.id + "," + que.ssn + "," + que.placeInLine);
+            }
+            File.WriteAllLines("que.txt", lines);
+        }
+        
 
     }
 }

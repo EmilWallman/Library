@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "KfnNSjG5HipJfHGoyhUJv88+8Cp6IQ5T6tkqgoY3hWrTN8kdD81blVbmXcaqzGrjPmKWGKzMrszaih3FgZCKjw==",
+  "dgSpecHash": "aGiRpp91l9FeCZm2rBQFZVlwqhDNFsjwRd0Xgo6yqCsKIBkQeA7EmpSVY/Dsw3QTRoi2sDKjE9KR4v/j9s7kow==",
   "success": true,
-  "projectFilePath": "C:\\Users\\emilw\\Library\\Library.csproj",
+  "projectFilePath": "C:\\Users\\emil.wallman\\Library\\Library\\Library.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\emilw\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\emilw\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\emilw\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
-    "C:\\Users\\emilw\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+    "C:\\Users\\emil.wallman\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\emil.wallman\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\emil.wallman\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\emil.wallman\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
   ],
   "logs": []
 }
