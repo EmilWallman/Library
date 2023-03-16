@@ -1,6 +1,21 @@
-0,ölasjdf,kasjhf,lkjasf,True
-1,dfasf,fddf,dd,True
-2,sffd,ddd,ddd,True
-4,ads,asd,asd,True
-4,Title,Author,Genre,True
-5,Title1,Author2,Genre2,True
+0,Title,Author,Genre,True,0
+1,To Kill a Mockingbird,Harper Lee,Classic,True,0
+2,1984,George Orwell,Dystopian,True,0
+3,The Catcher in the Rye,J.D. Salinger,Coming-of-age,True,0
+4,The Great Gatsby,F. Scott Fitzgerald,Classic,True,0
+5,Animal Farm,George Orwell,Political satire,True,0
+6,Brave New World,Aldous Huxley,Dystopian,True,0
+7,The Lord of the Rings,J.R.R. Tolkien,Fantasy,True,0
+8,Pride and Prejudice,Jane Austen,Romance,True,0
+9,The Hobbit,J.R.R. Tolkien,Fantasy,True,0
+10,The Diary of a Young Girl,Anne Frank,Memoir,True,0
+11,One Hundred Years of Solitude,Gabriel Garcia Marquez,Magical realism,True,0
+12,The Adventures of Huckleberry Finn,Mark Twain,Classic,True,0
+13,The Grapes of Wrath,John Steinbeck,Historical fiction,True,0
+14,The Picture of Dorian Gray,Oscar Wilde,Philosophical fiction,True,0
+15,The Hitchhiker's Guide to the Galaxy,Douglas Adams,Science fiction,True,0
+16,The Sound and the Fury,William Faulkner,Modernist,True,0
+17,The Sun Also Rises,Ernest Hemingway,Modernist,True,0
+18,To the Lighthouse,Virginia Woolf,Modernist,True,0
+19,Heart of Darkness,Joseph Conrad,Literary modernism,True,0
+20,The Old Man and the Sea,Ernest Hemingway,Novella,True,0
