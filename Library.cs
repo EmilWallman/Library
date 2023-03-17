@@ -5,17 +5,18 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using library;
+using System.Runtime.InteropServices;
 
 /*
 
 */
-    
+
 namespace library
 {
 
     public class Library
     {
-        //Create a link between this and the interface
+        
         
 
 
@@ -54,6 +55,8 @@ namespace library
                     break;
                 case 3:
                     //List of all books
+
+                    ListAllBooks();
 
                     break;
 
@@ -99,6 +102,36 @@ namespace library
 
         }
 
+        public void LendBook()
+        {
+            Console.WriteLine("");
+        }
+
+        public void ListAllBooks()
+        {
+            Console.WriteLine("All the books: ");
+
+            Console.WriteLine("______________________________________________________");
+            Console.WriteLine("|   Title   |   Author   |   Genre   |   Available   |");
+            Console.WriteLine("------------------------------------------------------");
+
+
+            foreach (Book book in books)
+            {
+                string available;
+                if (book.status == true)
+                {
+                    available = "Yes";
+                }
+                else
+                {
+                    available = "No";
+                }
+                Console.WriteLine("|    " + book.title + "   |   " + book.author + "   |   " + book.genre + "   |   " + available + "   |");
+                Console.WriteLine("--------------------------------------------------------------------------------");
+            }
+        }
+
         public void DeleteBooks(string title)
         {
             Book bookToDelete = books.Find(b => b.title == title);
@@ -121,7 +154,13 @@ namespace library
         {
 
             //Makes it so that the next book gest a higher ID
-            int id = books.Count;
+            int id = 0;
+
+            for (int i = 0; i < books.Count; i++)
+            {
+                id = books[i].id + 1;
+            }
+            
             
 
             Console.Write("Enter the Title: ");

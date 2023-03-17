@@ -7,23 +7,25 @@ using library;
 
 /*
 To Do:
+
 Ta Bort användare
 Användare ska kunna ändra sina lösenord
+
 Ta bort Böcker
 Låna Böcker
 Lämna tillbaka Böker
-Söka efter Böcker
 Reservera Böcker
+
 Lägg till Console.Clear
 Lägg till Thread.Sleep
-Koppla ihop två filer
+
 Ändra alla namn till interface osv
 En klass för AdminMenu
 En klass för User
 En klass för loggin o skapa konto osv (start meny)
 En klass för Bibliotek
 
- */
+*/
 
 namespace library
 {
