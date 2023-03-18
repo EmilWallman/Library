@@ -9,6 +9,7 @@ namespace library
         public string ssn;
         public bool isAdmin;
 
+
         public User(string username, string password, string ssn, bool isAdmin)
         {
             this.username = username;

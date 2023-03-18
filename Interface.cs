@@ -237,6 +237,9 @@ namespace library
 
         public void AdminMenu()
         {
+            
+            
+
             Console.WriteLine("1. Change User Status");
             Console.WriteLine("2. Change User Password");
             Console.WriteLine("3. Edit library");
@@ -250,8 +253,8 @@ namespace library
                 case 1:
                     ListAllUsers();
                     Console.Write("Enter the username:");
-                    string username = Console.ReadLine();
-                    User user = GetUserByUsername(username);
+                    string questionUsername = Console.ReadLine();
+                    User user = GetUserByUsername(questionUsername);
                     if (user != null)
                     {
                         user.isAdmin = !user.isAdmin;
@@ -274,9 +277,11 @@ namespace library
                     return;
 
                 case 3:
+                    string ssn = currentUser.ssn;
+
                     //Going to the library
                     Library library = new Library();
-                    library.AdminLibrary();
+                    library.AdminLibrary(ssn);
                     return;
 
                 case 4:

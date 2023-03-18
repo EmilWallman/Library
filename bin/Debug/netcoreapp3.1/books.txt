@@ -1,21 +1,22 @@
-0,Title,Author,Genre,True,0
-1,To Kill a Mockingbird,Harper Lee,Classic,True,0
-2,1984,George Orwell,Dystopian,True,0
-3,The Catcher in the Rye,J.D. Salinger,Coming-of-age,True,0
-4,The Great Gatsby,F. Scott Fitzgerald,Classic,True,0
-5,Animal Farm,George Orwell,Political satire,True,0
-6,Brave New World,Aldous Huxley,Dystopian,True,0
-7,The Lord of the Rings,J.R.R. Tolkien,Fantasy,True,0
-8,Pride and Prejudice,Jane Austen,Romance,True,0
-9,The Hobbit,J.R.R. Tolkien,Fantasy,True,0
-10,The Diary of a Young Girl,Anne Frank,Memoir,True,0
-11,One Hundred Years of Solitude,Gabriel Garcia Marquez,Magical realism,True,0
-12,The Adventures of Huckleberry Finn,Mark Twain,Classic,True,0
-13,The Grapes of Wrath,John Steinbeck,Historical fiction,True,0
-14,The Picture of Dorian Gray,Oscar Wilde,Philosophical fiction,True,0
-15,The Hitchhiker's Guide to the Galaxy,Douglas Adams,Science fiction,True,0
-16,The Sound and the Fury,William Faulkner,Modernist,True,0
-17,The Sun Also Rises,Ernest Hemingway,Modernist,True,0
-18,To the Lighthouse,Virginia Woolf,Modernist,True,0
-19,Heart of Darkness,Joseph Conrad,Literary modernism,True,0
-20,The Old Man and the Sea,Ernest Hemingway,Novella,True,0
+0,Title,Author,Genre
+1,To Kill a Mockingbird,Harper Lee,Classic
+2,1984,George Orwell,Dystopian
+3,The Catcher in the Rye,J.D. Salinger,Coming-of-age
+4,The Great Gatsby,F. Scott Fitzgerald,Classic
+5,Animal Farm,George Orwell,Political satire
+6,Brave New World,Aldous Huxley,Dystopian
+7,The Lord of the Rings,J.R.R. Tolkien,Fantasy
+8,Pride and Prejudice,Jane Austen,Romance
+9,The Hobbit,J.R.R. Tolkien,Fantasy
+10,The Diary of a Young Girl,Anne Frank,Memoir
+11,One Hundred Years of Solitude,Gabriel Garcia Marquez,Magical realism
+12,The Adventures of Huckleberry Finn,Mark Twain,Classic
+13,The Grapes of Wrath,John Steinbeck,Historical fiction
+14,The Picture of Dorian Gray,Oscar Wilde,Philosophical fiction
+15,The Hitchhiker's Guide to the Galaxy,Douglas Adams,Science fiction
+16,The Sound and the Fury,William Faulkner,Modernist
+17,The Sun Also Rises,Ernest Hemingway,Modernist
+18,To the Lighthouse,Virginia Woolf,Modernist
+19,Heart of Darkness,Joseph Conrad,Literary modernism
+20,The Old Man and the Sea,Ernest Hemingway,Novella
+21,Karl,Karl,Karl
