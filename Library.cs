@@ -8,6 +8,7 @@ using library;
 using System.Runtime.InteropServices;
 using System.IO.Pipes;
 using System.Collections.Immutable;
+using System.Runtime.ExceptionServices;
 
 /*
 
@@ -18,9 +19,6 @@ namespace library
 
     public class Library
     {
-        
-        
-
 
         public List<Book> books;
         public List<Queue> queues;
@@ -42,8 +40,10 @@ namespace library
             Console.WriteLine("1. Add Books");
             Console.WriteLine("2. Delete Books");
             Console.WriteLine("3. List all books");
-            Console.WriteLine("4. Search for Books");
-            Console.WriteLine("5. Back");
+            Console.WriteLine("4. Lend Book");
+            Console.WriteLine("5. Return Book");
+            Console.WriteLine("6. Search for Books");
+            Console.WriteLine("7. Back");
 
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
@@ -51,24 +51,37 @@ namespace library
             switch (choice)
             {
                 case 1:
+                    //Adds a book to the library, if it already exists it creates a copy
                     AddBooks();
                     break;
 
                 case 2:
+
+                    //WIP
                     Console.Write("Enter the title of the book that you want to delete: ");
                     string title = Console.ReadLine();
 
                     DeleteBooks(title);
                     break;
-                case 3:
-                    //List of all books
-                    //LendBook(currentSsn);
 
-                    //ListAllBooks();
+                case 3:
+                    //List all books
+                    ListAllBooks();
 
                     break;
 
                 case 4:
+                    //Lend a book and if it is already lended to someone it puts you in a queue for all the copies
+                    LendBook(currentSsn);
+
+                    break;
+
+                case 5:
+                    //Return Book
+                    ReturnBook(currentSsn);
+                    break;
+
+                case 6:
                     Console.Write("Enter the book you want to search for: ");
                     string search = Console.ReadLine();
 
@@ -87,11 +100,9 @@ namespace library
                         }
                     }
 
-
-
                     break;
-
-                case 5:
+                    
+                case 7:
                     Interface loginSite = new Interface();
                     loginSite.AdminMenu();
 
@@ -111,7 +122,6 @@ namespace library
         }
 
         //Gör så att när man söker så tar den och lsitar dom böckerna som kommer upp fint
-        
         public void LendBook(string ssn)
         {
             int ssnUser = Int32.Parse(ssn);
@@ -131,7 +141,7 @@ namespace library
                 foreach (Book book in matchedBooks)
                 {
                     
-                    Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nStatus: {3}\n", book.title, book.author, book.genre);
+                    Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre:  {2}\n", book.title, book.author, book.genre);
                 }
             }
 
@@ -150,13 +160,25 @@ namespace library
             }
 
             bool avalible = false;
+            int numberOfCopies = 0;
+            if (1 == 1)
+            {
+                foreach(Copy copy in copies)
+                {
+                    if(copy.id == bookId) 
+                    {
+                        numberOfCopies++;
+                    }
+                }
+            }
+
+
             foreach(Copy copy in copies)
             {
-                int i = 0;
-                i++;
                 if (copy.id == bookId)
                 {
-                    
+                    int i = 0;
+                    i++;
                     if (copy.ssn == -1)
                     {
                         avalible = true;
@@ -175,85 +197,128 @@ namespace library
                             break;
                         }
                     }
-
-                    if (i == copies.Count - 1)
+                    //Går inte in i denna
+                    
+                    
+                    if (i == numberOfCopies)
                     {
                         Console.WriteLine("The book " + lendbook + " is not avalible right now.");
-                        Console.WriteLine("Would you like to reserve it?");
-                    }
-                    
-                }
-            }
-
-            //this is where the add to queue is
-            foreach(Copy copy in copies)
-            {
-
-            }
-
-            for (int i = 0; i < matchedBooks.Count; i++)
-            {
-                if (matchedBooks[i].id == lendbook)
-                {
-                    
-                    Book bookToModify = books.Find(b => b.id == matchedBooks[i].id);
-                    //Only if its avalible:
-                    if (matchedBooks[i].status == true)
-                    {
-                        Console.WriteLine("You have chosen the book " + matchedBooks[i].title + " is that correct? y/n");
+                        Console.WriteLine("Would you like to reserve it? y/n");
                         string answer = Console.ReadLine();
-                        if (answer.ToLower() == "y")
-                        {
-                            
-
-                            //Uppdating the book with user and status
-                            bookToModify.ssnUser = ssnUser;
-                            bookToModify.status = false;
-
-                            SaveBooks();
-
-                            Console.WriteLine("The book " + matchedBooks[i].title + " is now lended");
-
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine(matchedBooks[i].title + " is not avalible at the moment, do you want to reserve it? y/n");
-                        string answer = Console.ReadLine();
-
                         if(answer.ToLower() == "y")
                         {
-
-                            foreach(Queue que in queues)
-                            {
-                                if(que.id == matchedBooks[i].id)
-                                {
-                                    que.placeInLine += 1;
-                                    AddToQue(matchedBooks[i].id, ssnUser, que.placeInLine);
-                                    SaveBookUser();
-                                }
-                                else
-                                {
-                                    AddToQue(matchedBooks[i].id, ssnUser, 1);
-                                }
-                            }
                             
-                        }
+                            if (File.Exists("queue_" + copy.id + ".txt"))
+                            {
+                                LoadQueue(copy.id);
+                                Queue queue = new Queue(copy.id, ssnUser);
+                                queues.Add(queue);
+                                SaveQueue(copy.id);
+                                //Lägg till i kön
+                            }
+                            if(!File.Exists("queue_" + copy.id + ".txt"))
+                            {
+                                var myFile = File.Create("queue_" + bookId + ".txt");
+                                myFile.Close();
+                                LoadQueue(copy.id);
+                                Queue queue = new Queue(copy.id, ssnUser);
+                                queues.Add(queue);
 
+                                SaveQueue(copy.id);
+
+                            }
+                        }
                     }
                 }
             }
         }
-        
-        
-        public void AddToQue(int id, int ssn, int placeInLine)
-        {
-            Queue que = new Queue (id, ssn, placeInLine);
-            queues.Add(que);
-            SaveBookUser();
-        }
-        
 
+        public void ReturnBook(string ssn)
+        {
+            int ssnUser = Int32.Parse(ssn);
+
+            Console.WriteLine("What book do you want to return?");
+
+            //List all the users books
+
+            List<int> usersBooks = new List<int>();
+
+            foreach(Copy copy in copies)
+            {
+                if(copy.ssn == ssnUser)
+                {
+                    usersBooks.Add(copy.id);
+                }
+            }
+            
+            for (int i = 0; i < usersBooks.Count; i++)
+            {
+                foreach(Book book in books)
+                {
+                    if (usersBooks[i] == book.id)
+                    {
+                        //List the books
+                        Console.WriteLine("Title: " + book.title);
+                    }    
+                }
+            }
+            int returnBook = -1;
+            string answer = Console.ReadLine();
+
+            foreach(Book book in books)
+            {
+                if(answer == book.title)
+                {
+                    for(int i = 0;i < usersBooks.Count;i++)
+                    {
+                        if (usersBooks[i] == book.id)
+                        {
+                            Console.WriteLine("Returning the book " + book.title);
+                            returnBook = book.id;
+                        }
+                    }
+                }
+            }
+            int ssnNewUser = -1;
+            foreach(Copy copy in copies)
+            {
+                if(copy.id == returnBook && copy.ssn == ssnUser)
+                {
+                    
+                    
+                    //If there is someone in the queue
+                    if (File.Exists("queue_" + copy.id + ".txt"))
+                    {
+                        LoadQueue(copy.id);
+                        foreach(Queue queue in queues)
+                        {
+                            if(queue.id == copy.id)
+                            {
+                                ssnNewUser = queue.ssn;
+                                Queue userToDelete = queues.Find(b => b.ssn == ssnNewUser);
+                                if (userToDelete != null)
+                                {
+                                    queues.Remove(userToDelete);
+                                    SaveQueue(copy.id);
+                                }
+                                copy.ssn = ssnNewUser;
+                                SaveCopies();
+                                break;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        copy.ssn = -1;
+                        SaveCopies();
+                    }
+                }
+            }
+
+
+
+        }
 
         //Funkar typ behöver fixas till lite
         public void ListAllBooks()
@@ -361,68 +426,6 @@ namespace library
 
         }
 
-        public void LoadBooks()
-        {
-            if (!File.Exists("books.txt"))
-            {
-                return;
-            }
-
-            string[] lines = File.ReadAllLines("books.txt");
-            foreach (string line in lines) 
-            {
-                string[] parts = line.Split(',');
-                int id = int.Parse(parts[0]);
-                string title = parts[1];
-                string author = parts[2];
-                string genre = parts[3];
-
-                Book book = new Book(id, title, author, genre);
-                books.Add(book);    
-            }
-        }  
-        
-        public void LoadCopies()
-        {
-            if (!File.Exists("copy.txt"))
-            {
-                File.Create("copy.txt");
-            }
-
-            string[] lines = File.ReadAllLines("copy.txt");
-            foreach (string line in lines)
-            {
-                string[] parts = line.Split(",");
-                int ISBN = int.Parse(parts[0]);
-                int id = int.Parse(parts[1]);
-                int ssn = int.Parse(parts[2]);
-
-                Copy copy = new Copy(ISBN, id, ssn);
-                copies.Add(copy);
-            }
-
-        }
-
-        public void SaveCopies()
-        {
-            List<string> lines = new List<string>();
-            foreach (Copy copy in copies)
-            {
-                lines.Add(copy.ISBN + "," + copy.id + "," + copy.ssn);
-            }
-            File.WriteAllLines("copy.txt", lines);
-        }
-
-        public void SaveBooks()
-        {
-            List<string> lines = new List<string>();
-            foreach (Book book in books) 
-            { 
-                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre);
-            }
-            File.WriteAllLines("books.txt", lines);
-        }
-
         //Funkar nästan behöver bara fixas till lite
         public List<Book> SearchBooks(string searchTerm)
         {
@@ -478,49 +481,108 @@ namespace library
             return d[s.Length, t.Length];
         }
 
-        //skapa en ny textfil för varje kopia
-        public void LoadQueue(int bookId)
+
+
+
+        public void LoadBooks()
         {
-            if (!File.Exists("queue_"+bookId))
-            {
-                // finns ingen kö
-            }
-
-        }
-
-
-
-        /*
-        public void LoadQue()
-        {
-            if (!File.Exists("que.txt"))
+            if (!File.Exists("books.txt"))
             {
                 return;
             }
 
-            string[] lines = File.ReadAllLines("que.txt");
-            foreach (string line in lines)
+            string[] lines = File.ReadAllLines("books.txt");
+            foreach (string line in lines) 
             {
                 string[] parts = line.Split(',');
                 int id = int.Parse(parts[0]);
+                string title = parts[1];
+                string author = parts[2];
+                string genre = parts[3];
+
+                Book book = new Book(id, title, author, genre);
+                books.Add(book);    
+            }
+        }
+
+        public void LoadQueue(int bookId)
+        {
+            
+            if (!File.Exists("queue_" + bookId + ".txt"))
+            {
+
+                return;
+            }
+            queues.Clear();
+            string[] lines = File.ReadAllLines("queue_" + bookId + ".txt");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(",");
+                int id = int.Parse(parts[0]);
                 int ssn = int.Parse(parts[1]);
 
-                Queue que = new Queue (id, ssn);
-                queues.Add(que);
-
+                Queue queue = new Queue(id, ssn);
+                queues.Add(queue);
             }
         }
 
-        public void SaveBookUser()
+        public void LoadCopies()
+        {
+            if (!File.Exists("copy.txt"))
+            {
+                File.Create("copy.txt");
+            }
+
+            string[] lines = File.ReadAllLines("copy.txt");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(",");
+                int ISBN = int.Parse(parts[0]);
+                int id = int.Parse(parts[1]);
+                int ssn = int.Parse(parts[2]);
+
+                Copy copy = new Copy(ISBN, id, ssn);
+                copies.Add(copy);
+            }
+
+        }
+
+        public void SaveCopies()
         {
             List<string> lines = new List<string>();
-            foreach (Queue que in queues)
+            foreach (Copy copy in copies)
             {
-                lines.Add(que.id + "," + que.ssn);
+                lines.Add(copy.ISBN + "," + copy.id + "," + copy.ssn);
             }
-            File.WriteAllLines("que.txt", lines);
+            File.WriteAllLines("copy.txt", lines);
         }
-        */
+
+        public void SaveBooks()
+        {
+            List<string> lines = new List<string>();
+            foreach (Book book in books) 
+            { 
+                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre);
+            }
+            File.WriteAllLines("books.txt", lines);
+        }
+
+        public void SaveQueue(int id)
+        {
+
+            List<string> lines = new List<string>();
+            foreach (Queue queue in queues)
+            {
+                lines.Add(queue.id + "," + queue.ssn);
+            }
+            File.WriteAllLines("queue_" + id + ".txt", lines);
+            if (queues.Count <= 0) 
+            {
+                File.Delete("queue_" + id + ".txt");
+            }
+        }
+
+       
     }
 }
 

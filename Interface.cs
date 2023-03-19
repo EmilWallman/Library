@@ -48,9 +48,7 @@ namespace library
 
         public void Start()
         {
-            
-
-            Console.WriteLine("Welcome to the Login Site");
+            Console.WriteLine("Welcome to the Library");
 
             while (true)
             {
@@ -64,27 +62,108 @@ namespace library
                 switch (choice)
                 {
                     case 1:
+                        Console.Clear();
                         Login();
                         break;
                     case 2:
+                        Console.Clear();
                         CreateAccount();
                         break;
                     case 3:
+                        Console.Clear();
                         System.Environment.Exit(0);
                         return;
                     default:
+                        Console.Clear();
                         Console.WriteLine("Invalid choice. Try again.");
                         break;
                 }
             }
         }
+        public void EditUsers()
+        {
+            Console.WriteLine("1. Change User Status");
+            Console.WriteLine("2. Change User Password");
+            Console.WriteLine("3. Back");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    ListAllUsers();
+                    Console.Write("Enter the username:");
+                    string questionUsername = Console.ReadLine();
+                    User user = GetUserByUsername(questionUsername);
+                    if (user != null)
+                    {
+                        user.isAdmin = !user.isAdmin;
+                        Console.WriteLine("User status changed successfully to " + (user.isAdmin ? "Admin" : "Regular") + ".");
+                        SaveUsers();
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("User not found.");
+                    }
+
+                    break;
+
+                case 2:
+                    ListAllUsers();
+                    Console.WriteLine("What user do you want to change the password for?");
+                    string usernameChoise = Console.ReadLine();
+                    ChangePasword(usernameChoise);
+                    return;
+                case 3:
+                    AdminMenu();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            EditUsers();
+        }
+        public void AdminMenu()
+        {
+
+            Console.WriteLine("1. Edit Users");
+            Console.WriteLine("2. Edit library");
+            Console.WriteLine("3. Logout");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    EditUsers();
+                    break;
+
+                case 2:
+                    string ssn = currentUser.ssn;
+                    //Going to the library
+                    Library library = new Library();
+                    library.AdminLibrary(ssn);
+                    return;
+
+                case 3:
+                    Console.WriteLine("Logging out...");
+                    Start();
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            AdminMenu();
+        }
 
         public void ChangePasword(string username)
         {
             
-
-            
-
             foreach (var user in users) 
             { 
                 if (user.username == username)
@@ -124,6 +203,7 @@ namespace library
 
         private void Login()
         {
+            Console.Clear();
             Console.Write("Enter your username: ");
             string username = Console.ReadLine();
             Console.Write("Enter your Social Secutiry Number: ");
@@ -148,8 +228,21 @@ namespace library
                     Console.Write("\b \b");
                 }
             } while (key.Key != ConsoleKey.Enter);
-
-            Console.WriteLine();
+            Console.Clear();
+            for(int i = 0; i < 4; i++)
+            {
+                Console.Write("Logging in");
+                Thread.Sleep(300);
+                Console.Write(".");
+                Thread.Sleep(300);
+                Console.Write(".");
+                Thread.Sleep(300);
+                Console.Write(".");
+                Thread.Sleep(300);
+                Console.Clear();
+                i++;
+            }
+            
 
 
             foreach (User user in users)
@@ -158,6 +251,8 @@ namespace library
                 {
                     currentUser = user;
                     Console.WriteLine("Login successful.");
+                    Thread.Sleep(1000);
+                    Console.Clear();
                     if (user.isAdmin)
                     {
                         Console.WriteLine("Welcome, Admin.");
@@ -235,69 +330,7 @@ namespace library
             }
         }
 
-        public void AdminMenu()
-        {
-            
-            
-
-            Console.WriteLine("1. Change User Status");
-            Console.WriteLine("2. Change User Password");
-            Console.WriteLine("3. Edit library");
-            Console.WriteLine("4. Logout");
-            
-            Console.Write("Enter your choice: ");
-            int choice = int.Parse(Console.ReadLine());
-
-            switch (choice)
-            {
-                case 1:
-                    ListAllUsers();
-                    Console.Write("Enter the username:");
-                    string questionUsername = Console.ReadLine();
-                    User user = GetUserByUsername(questionUsername);
-                    if (user != null)
-                    {
-                        user.isAdmin = !user.isAdmin;
-                        Console.WriteLine("User status changed successfully to " + (user.isAdmin ? "Admin" : "Regular") + ".");
-                        SaveUsers();
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("User not found.");
-                    }
-
-                    break;
-
-                case 2:
-                    ListAllUsers();
-                    Console.WriteLine("What user do you want to change the password for?");
-                    string usernameChoise = Console.ReadLine();
-                    ChangePasword(usernameChoise);
-                    return;
-
-                case 3:
-                    string ssn = currentUser.ssn;
-
-                    //Going to the library
-                    Library library = new Library();
-                    library.AdminLibrary(ssn);
-                    return;
-
-                case 4:
-                    Console.WriteLine("Logging out...");
-                    Start();
-                    return;
-
-                default:
-                    Console.WriteLine("Invalid choice. Try again.");
-                    break;
-            }
-
-            
-
-            AdminMenu();
-        }
+        
 
         //Denna e TOM LÖS DE FÖRFAN
         private void DeleteUser()
