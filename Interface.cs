@@ -25,6 +25,8 @@ En klass för User
 En klass för loggin o skapa konto osv (start meny)
 En klass för Bibliotek
 
+Ta bort filer som inte används
+
 */
 
 namespace library
