@@ -107,7 +107,7 @@ namespace library
                                 }
                             }
 
-                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: {3} ", book.title, book.author, book.genre, numOfCopies);
+                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: {3}}\n ", book.title, book.author, book.genre, numOfCopies);
                         }
                     }
 
