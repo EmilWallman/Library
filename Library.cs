@@ -94,9 +94,20 @@ namespace library
                     else
                     {
                         Console.WriteLine("{0} books found matching the search query:", matchedBooks.Count);
+
+                        int numOfCopies = 0;
                         foreach (Book book in matchedBooks)
                         {
-                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nStatus: {3}\n", book.title, book.author, book.genre);
+                            
+                            foreach (Copy copy in copies)
+                            {
+                                if(copy.ISBN == book.ISBN)
+                                {
+                                    numOfCopies++;
+                                }
+                            }
+
+                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: {3} ", book.title, book.author, book.genre, numOfCopies);
                         }
                     }
 
@@ -155,7 +166,7 @@ namespace library
             {
                 if (book.title == lendbook)
                 {
-                    bookId = book.id;
+                    bookId = book.ISBN;
                 }
             }
 
@@ -255,7 +266,7 @@ namespace library
             {
                 foreach(Book book in books)
                 {
-                    if (usersBooks[i] == book.id)
+                    if (usersBooks[i] == book.ISBN)
                     {
                         //List the books
                         Console.WriteLine("Title: " + book.title);
@@ -271,10 +282,10 @@ namespace library
                 {
                     for(int i = 0;i < usersBooks.Count;i++)
                     {
-                        if (usersBooks[i] == book.id)
+                        if (usersBooks[i] == book.ISBN)
                         {
                             Console.WriteLine("Returning the book " + book.title);
-                            returnBook = book.id;
+                            returnBook = book.ISBN;
                         }
                     }
                 }
@@ -292,7 +303,7 @@ namespace library
                         LoadQueue(copy.id);
                         foreach(Queue queue in queues)
                         {
-                            if(queue.id == copy.id)
+                            if(queue.ISBN == copy.id)
                             {
                                 ssnNewUser = queue.ssn;
                                 Queue userToDelete = queues.Find(b => b.ssn == ssnNewUser);
@@ -366,7 +377,7 @@ namespace library
 
             for (int i = 0; i < books.Count; i++)
             {
-                id = books[i].id + 1;
+                id = books[i].ISBN + 1;
             }
             int ISBN = 0;
             for (int i = 0; i < copies.Count; i++)
@@ -387,7 +398,7 @@ namespace library
 
                     //individuellt
                     check = 1;
-                    id = book.id;
+                    id = book.ISBN;
                     if (check == 1)
                     {
                         Copy copy = new Copy(ISBN, id, ssn);
@@ -427,22 +438,31 @@ namespace library
         }
 
         //Funkar nästan behöver bara fixas till lite
+
+        
         public List<Book> SearchBooks(string searchTerm)
         {
             const int MAX_DISTANCE = 2; // Maximum Levenshtein distance for a match
 
-            // Search for books that match the search term in the title, author, or genre
+            int isbn;
+            bool isNumeric = int.TryParse(searchTerm, out isbn);
+
+            // Search for books that match the search term in the title, author, genre, or ISBN
             List<Book> matchingBooks = books.Where(b =>
-                b.title.ToLower().Contains(searchTerm.ToLower()) ||
+                ((isNumeric && b.ISBN == isbn) || (!isNumeric &&
+                (b.title.ToLower().Contains(searchTerm.ToLower()) ||
                 b.author.ToLower().Contains(searchTerm.ToLower()) ||
-                b.genre.ToLower().Contains(searchTerm.ToLower())
+                b.genre.ToLower().Contains(searchTerm.ToLower()))))
             ).ToList();
 
             // Search for close matches using Levenshtein distance
             foreach (Book book in books)
             {
-                int distance = ComputeLevenshteinDistance(book.title.ToLower(), searchTerm.ToLower());
-                if (distance <= MAX_DISTANCE && !matchingBooks.Contains(book))
+                int titleDistance = ComputeLevenshteinDistance(book.title.ToLower(), searchTerm.ToLower());
+                int authorDistance = ComputeLevenshteinDistance(book.author.ToLower(), searchTerm.ToLower());
+                int genreDistance = ComputeLevenshteinDistance(book.genre.ToLower(), searchTerm.ToLower());
+
+                if ((titleDistance <= MAX_DISTANCE || authorDistance <= MAX_DISTANCE || genreDistance <= MAX_DISTANCE) && !matchingBooks.Contains(book))
                 {
                     matchingBooks.Add(book);
                 }
@@ -450,6 +470,42 @@ namespace library
 
             return matchingBooks;
         }
+
+        /*
+         public List<Book> SearchBooks(string searchTerm)
+        {
+            const int MAX_DISTANCE = 2; // Maximum Levenshtein distance for a match
+
+            // Check if the search term is a valid integer value
+            int isbn;
+            bool isNumeric = int.TryParse(searchTerm, out isbn);
+
+            // Search for books that match the search term in the title, author, genre, or ISBN
+            List<Book> matchingBooks = books.Where(b =>
+                b.title.ToLower().Contains(searchTerm.ToLower()) ||
+                b.author.ToLower().Contains(searchTerm.ToLower()) ||
+                b.genre.ToLower().Contains(searchTerm.ToLower()) ||
+                (isNumeric && b.ISBN == isbn)
+            ).ToList();
+
+            // Search for close matches using Levenshtein distance
+            int distance;
+            foreach (Book book in books)
+            {
+                distance = ComputeLevenshteinDistance(book.title.ToLower(), searchTerm.ToLower());
+                distance = ComputeLevenshteinDistance(book.author.ToLower(), searchTerm.ToLower());
+                distance = ComputeLevenshteinDistance(book.genre.ToLower(), searchTerm.ToLower());
+
+                if ((distance <= MAX_DISTANCE && !matchingBooks.Contains(book)) || book.ISBN == isbn)
+                {
+                    matchingBooks.Add(book);
+                }
+            }
+
+            return matchingBooks;
+        }
+        
+        */
 
         private static int ComputeLevenshteinDistance(string s, string t)
         {
@@ -495,12 +551,12 @@ namespace library
             foreach (string line in lines) 
             {
                 string[] parts = line.Split(',');
-                int id = int.Parse(parts[0]);
+                int ISBN = int.Parse(parts[0]);
                 string title = parts[1];
                 string author = parts[2];
                 string genre = parts[3];
 
-                Book book = new Book(id, title, author, genre);
+                Book book = new Book(ISBN, title, author, genre);
                 books.Add(book);    
             }
         }
@@ -518,10 +574,10 @@ namespace library
             foreach (string line in lines)
             {
                 string[] parts = line.Split(",");
-                int id = int.Parse(parts[0]);
+                int ISBN = int.Parse(parts[0]);
                 int ssn = int.Parse(parts[1]);
 
-                Queue queue = new Queue(id, ssn);
+                Queue queue = new Queue(ISBN, ssn);
                 queues.Add(queue);
             }
         }
@@ -537,11 +593,11 @@ namespace library
             foreach (string line in lines)
             {
                 string[] parts = line.Split(",");
-                int ISBN = int.Parse(parts[0]);
-                int id = int.Parse(parts[1]);
+                int id = int.Parse(parts[0]);
+                int ISBN = int.Parse(parts[1]);
                 int ssn = int.Parse(parts[2]);
 
-                Copy copy = new Copy(ISBN, id, ssn);
+                Copy copy = new Copy(id, ISBN, ssn);
                 copies.Add(copy);
             }
 
@@ -552,7 +608,7 @@ namespace library
             List<string> lines = new List<string>();
             foreach (Copy copy in copies)
             {
-                lines.Add(copy.ISBN + "," + copy.id + "," + copy.ssn);
+                lines.Add(copy.id + "," + copy.ISBN + "," + copy.ssn);
             }
             File.WriteAllLines("copy.txt", lines);
         }
@@ -562,23 +618,23 @@ namespace library
             List<string> lines = new List<string>();
             foreach (Book book in books) 
             { 
-                lines.Add(book.id + "," + book.title + "," + book.author + "," + book.genre);
+                lines.Add(book.ISBN + "," + book.title + "," + book.author + "," + book.genre);
             }
             File.WriteAllLines("books.txt", lines);
         }
 
-        public void SaveQueue(int id)
+        public void SaveQueue(int ISBN)
         {
 
             List<string> lines = new List<string>();
             foreach (Queue queue in queues)
             {
-                lines.Add(queue.id + "," + queue.ssn);
+                lines.Add(queue.ISBN + "," + queue.ssn);
             }
-            File.WriteAllLines("queue_" + id + ".txt", lines);
+            File.WriteAllLines("queue_" + ISBN + ".txt", lines);
             if (queues.Count <= 0) 
             {
-                File.Delete("queue_" + id + ".txt");
+                File.Delete("queue_" + ISBN + ".txt");
             }
         }
 
