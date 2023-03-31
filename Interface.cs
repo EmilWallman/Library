@@ -342,10 +342,9 @@ namespace library
 
         private void UserMenu(string username)
         {
-            
-
             Console.WriteLine("1. Logout");
             Console.WriteLine("2. Change password");
+            Console.WriteLine("3. Enter the Library");
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
 
@@ -356,6 +355,12 @@ namespace library
                     return;
                 case 2:
                     ChangePasword(username);
+                    return;
+                case 3:
+                    string ssn = currentUser.ssn;
+                    Library library = new Library();
+                    library.UserLibrary(ssn);
+
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
