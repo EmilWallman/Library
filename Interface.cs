@@ -86,7 +86,11 @@ namespace library
         {
             Console.WriteLine("1. Change User Status");
             Console.WriteLine("2. Change User Password");
-            Console.WriteLine("3. Back");
+            Console.WriteLine("3. Remove a User");
+            Console.WriteLine("4. Add a User");
+            Console.WriteLine("5. Change Username");
+            Console.WriteLine("6. Change User SSN");
+            Console.WriteLine("7. Back");
 
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
@@ -117,8 +121,25 @@ namespace library
                     Console.WriteLine("What user do you want to change the password for?");
                     string usernameChoise = Console.ReadLine();
                     ChangePasword(usernameChoise);
-                    return;
+                    break;
                 case 3:
+                    DeleteUser();
+
+                    break;
+
+                case 4:
+
+                    break;
+
+                case 5:
+
+                    break;
+
+                case 6:
+
+                    break;
+
+                case 7:
                     AdminMenu();
                     break;
 
@@ -332,12 +353,50 @@ namespace library
             }
         }
 
-        
-
-        //Denna e TOM LÖS DE FÖRFAN
         private void DeleteUser()
         {
+            ListAllUsers();
+            Console.Write("Enter the username:");
+            string questionUsername = Console.ReadLine();
             
+            
+            foreach (User user in users)
+            {
+                if (user.username == questionUsername)
+                {
+                    int i = 0;
+                    while (i == 0)
+                    {
+                        Console.WriteLine("Write CONFIRM in big letters to confirm the removal of " + user.username);
+                        string confirm = Console.ReadLine();
+
+                        if (confirm == "CONFIRM")
+                        {
+                            users.Remove(user);
+                            SaveUsers();
+
+                            Console.WriteLine(questionUsername + " has been removed");
+                            i++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Someting went wrong, write again och press X to go back");
+                            confirm = Console.ReadLine();
+                            if (confirm.ToLower() == "x")
+                            {
+                                i++;
+                            }
+                            else
+                            {
+                                
+                            }
+                        }
+                    }
+                    
+                }
+                
+            }
+
         }
 
         private void UserMenu(string username)
