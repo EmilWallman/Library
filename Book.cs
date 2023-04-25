@@ -6,15 +6,15 @@ namespace library
     public class Book
     {
         
-        public int ISBN;
+        public int id;
         public string title;
         public string author;
         public string genre;
 
 
-        public Book(int ISBN, string title, string author, string genre)
+        public Book(int id, string title, string author, string genre)
         {
-            this.ISBN = ISBN;
+            this.id = id;
             this.title = title;
             this.author = author;
             this.genre = genre;

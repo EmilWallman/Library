@@ -27,6 +27,7 @@ En klass för Bibliotek
 
 Ta bort filer som inte används
 
+
 */
 
 namespace library
@@ -68,6 +69,7 @@ namespace library
                         Login();
                         break;
                     case 2:
+                        //Funkar men behöver bli lite finare med sleep
                         Console.Clear();
                         CreateAccount();
                         break;
@@ -84,13 +86,14 @@ namespace library
         }
         public void EditUsers()
         {
-            Console.WriteLine("1. Change User Status");
-            Console.WriteLine("2. Change User Password");
-            Console.WriteLine("3. Remove a User");
-            Console.WriteLine("4. Add a User");
-            Console.WriteLine("5. Change Username");
-            Console.WriteLine("6. Change User SSN");
-            Console.WriteLine("7. Back");
+            Console.WriteLine("1. Change Status");
+            Console.WriteLine("2. Change Username");
+            Console.WriteLine("3. Change User SSN");
+            Console.WriteLine("4. Change User Password");
+            Console.WriteLine("5. Remove a User");
+            Console.WriteLine("6. Add a User");
+            Console.WriteLine("7. List all users");
+            Console.WriteLine("8. Back");
 
             Console.Write("Enter your choice: ");
             int choice = int.Parse(Console.ReadLine());
@@ -98,6 +101,8 @@ namespace library
             switch (choice)
             {
                 case 1:
+                    //Change status
+                    //Funkar men behöver bli lite finare med sleep
                     ListAllUsers();
                     Console.Write("Enter the username:");
                     string questionUsername = Console.ReadLine();
@@ -117,29 +122,47 @@ namespace library
                     break;
 
                 case 2:
-                    ListAllUsers();
-                    Console.WriteLine("What user do you want to change the password for?");
-                    string usernameChoise = Console.ReadLine();
-                    ChangePasword(usernameChoise);
+                    //Change username
+
+
+                    ChangeUsername();
+
                     break;
                 case 3:
-                    DeleteUser();
+                    //Change SSN
 
+                    ChangeSSN();
                     break;
 
                 case 4:
+                    //Change password
+
+                    //Funkar men behöver bli lite finare med sleep
+                    ListAllUsers();
+                    Console.Write("Enter the username: ");
+                    string usernameChoise = Console.ReadLine();
+                    ChangePasword(usernameChoise);
 
                     break;
 
                 case 5:
+                    //Remove user
 
+                    //Funkar men behöver bli lite finare med sleep
+                    DeleteUser();
                     break;
 
                 case 6:
+                    //Add user
+                    CreateAccount();
 
                     break;
 
                 case 7:
+                    ListAllUsers();
+                    break;
+
+                case 8:
                     AdminMenu();
                     break;
 
@@ -184,11 +207,85 @@ namespace library
             AdminMenu();
         }
 
+        public void ChangeSSN()
+        {
+            Console.Clear();
+            ListAllUsers();
+            Console.Write("Enter the user: ");
+            string username = Console.ReadLine();
+
+            int i = 0;
+            foreach (var user in users)
+            {
+                i++;
+                if (user.username == username)
+                {
+                    Console.Write("Enter the new SSN: ");
+                    string newSSN = Console.ReadLine();
+
+                    Console.WriteLine();
+                    Console.Clear();
+                    user.ssn = newSSN;
+
+                    SaveUsers();
+                    Console.WriteLine($"SSN for {user.username} has been updated. ");
+                    Thread.Sleep(1500);
+                    Console.Clear();
+                    break;
+
+                }
+                if (i == users.Count)
+                {
+                    Console.WriteLine($"User with uresname {user.username} does not exist. ");
+                    Thread.Sleep(1500);
+                    Console.Clear();
+                    break;
+                }
+            }
+        }
+
+        public void ChangeUsername()
+        {
+            ListAllUsers();
+            Console.Write("Enter the user: ");
+            string username = Console.ReadLine();
+
+            int i = 0;
+            foreach (var user in users)
+            {
+                i++;
+                if (user.username == username)
+                {
+                    Console.Write("Enter the new username: ");
+                    string newUsername = Console.ReadLine();
+
+                    Console.WriteLine();
+                    Console.Clear();
+                    user.username = newUsername;
+                    
+                    SaveUsers();
+                    Console.WriteLine($"Username for {username} has been updated to {newUsername}");
+                    Thread.Sleep(1500);
+                    Console.Clear();
+                    break;
+
+                }
+                if (i == users.Count)
+                {
+                    Console.WriteLine($"User with uresname {username} does not exist. ");
+                    Thread.Sleep(1500);
+                    Console.Clear();
+                    break;
+                }
+            }
+        }
+
         public void ChangePasword(string username)
         {
-            
+            int i = 0;
             foreach (var user in users) 
-            { 
+            {
+                i++;
                 if (user.username == username)
                 {
                     Console.WriteLine("What is the new password?");
@@ -219,9 +316,16 @@ namespace library
                     Console.WriteLine($"Password for {username} has been updated.");
 
                     SaveUsers();
+                    break;
                 }
+                if (i == users.Count)
+                {
+                    Console.WriteLine($"User with username {username} does not exist.");
+                    break;
+                }
+
             }
-            Console.WriteLine($"User with username {username} does not exist.");
+
         }
 
         private void Login()
@@ -340,6 +444,7 @@ namespace library
 
             Console.WriteLine("Account created successfully.");
 
+            Thread.Sleep(1000);
 
             Console.Clear();
         }
@@ -392,6 +497,7 @@ namespace library
                             }
                         }
                     }
+                    break;
                     
                 }
                 

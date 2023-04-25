@@ -18,5 +18,3 @@
 17,The Sun Also Rises,Ernest Hemingway,Modernist
 18,To the Lighthouse,Virginia Woolf,Modernist
 19,Heart of Darkness,Joseph Conrad,Literary modernism
-20,The Old Man and the Sea,Ernest Hemingway,Novella
-21,Karl,Karl,Karl
