@@ -66,7 +66,7 @@ namespace library
                 {
                     case 1:
                         Console.Clear();
-                        Login();
+                        Login(); 
                         break;
                     case 2:
                         //Funkar men behöver bli lite finare med sleep
