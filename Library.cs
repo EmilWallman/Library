@@ -415,7 +415,7 @@ namespace library
                                             }
                                             if (copy.ssn != -1)
                                             {
-                                                Console.WriteLine("One book is currently lended should we still delete it?")
+                                                Console.WriteLine("One book is currently lended should we still delete it?");
                                             }
 
 
