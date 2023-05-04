@@ -2,3 +2,4 @@ Admin,admin,1000,True
 Emil,test,040525,False
 test3,1000,1000,False
 test2,test2,2,False
+User,user,2000,False

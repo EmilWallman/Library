@@ -40,7 +40,7 @@ namespace library
         
         public List<User> users;
         public User currentUser;
-
+        string currentssn;
 
 
         public Interface()
@@ -84,7 +84,71 @@ namespace library
                 }
             }
         }
-        public void EditUsers()
+        
+        public void AdminMenu(int currentSsn)
+        {
+            Console.WriteLine("1. Edit Users");
+            Console.WriteLine("2. Edit library");
+            Console.WriteLine("3. Logout");
+
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    EditUsers(currentSsn);
+                    break;
+
+                case 2:
+                    //Going to the library
+                    Library library = new Library();
+                    library.AdminLibrary(Convert.ToString(currentSsn));
+                    return;
+
+                case 3:
+                    Console.WriteLine("Logging out...");
+                    Start();
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            AdminMenu(currentSsn);
+        }
+
+        public void UserMenu(string username, int currentSsn)
+        {
+            
+            Console.WriteLine("1. Logout");
+            Console.WriteLine("2. Change password");
+            Console.WriteLine("3. Enter the Library");
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine("Logging out...");
+                    return;
+                case 2:
+                    ChangePasword(username, currentSsn);
+                    return;
+                case 3:
+                    
+                    Library library = new Library();
+                    library.UserLibrary(username, Convert.ToString(currentSsn));
+
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            UserMenu(username, currentSsn);
+        }
+
+        public void EditUsers(int currentSsn)
         {
             Console.WriteLine("1. Change Status");
             Console.WriteLine("2. Change Username");
@@ -141,7 +205,7 @@ namespace library
                     ListAllUsers();
                     Console.Write("Enter the username: ");
                     string usernameChoise = Console.ReadLine();
-                    ChangePasword(usernameChoise);
+                    ChangePasword(usernameChoise, currentSsn);
 
                     break;
 
@@ -163,48 +227,14 @@ namespace library
                     break;
 
                 case 8:
-                    AdminMenu();
+                    AdminMenu(currentSsn);
                     break;
 
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
                     break;
             }
-            EditUsers();
-        }
-        public void AdminMenu()
-        {
-
-            Console.WriteLine("1. Edit Users");
-            Console.WriteLine("2. Edit library");
-            Console.WriteLine("3. Logout");
-
-            Console.Write("Enter your choice: ");
-            int choice = int.Parse(Console.ReadLine());
-
-            switch (choice)
-            {
-                case 1:
-                    EditUsers();
-                    break;
-
-                case 2:
-                    string ssn = currentUser.ssn;
-                    //Going to the library
-                    Library library = new Library();
-                    library.AdminLibrary(ssn);
-                    return;
-
-                case 3:
-                    Console.WriteLine("Logging out...");
-                    Start();
-                    return;
-
-                default:
-                    Console.WriteLine("Invalid choice. Try again.");
-                    break;
-            }
-            AdminMenu();
+            EditUsers(currentSsn);
         }
 
         public void ChangeSSN()
@@ -280,7 +310,7 @@ namespace library
             }
         }
 
-        public void ChangePasword(string username)
+        public void ChangePasword(string username, int currentSsn)
         {
             int i = 0;
             foreach (var user in users) 
@@ -324,6 +354,14 @@ namespace library
                     break;
                 }
 
+            }
+            if (currentUser.isAdmin == true)
+            {
+                EditUsers(currentSsn);
+            }
+            else
+            {
+                UserMenu(username, currentSsn);
             }
 
         }
@@ -383,12 +421,12 @@ namespace library
                     if (user.isAdmin)
                     {
                         Console.WriteLine("Welcome, Admin.");
-                        AdminMenu();
+                        AdminMenu(int.Parse(user.ssn));
                     }
                     else
                     {
                         Console.WriteLine("Welcome, " + username + ".");
-                        UserMenu(username);
+                        UserMenu(username, int.Parse(user.ssn));
                     }
                     return;
                 }
@@ -505,34 +543,7 @@ namespace library
 
         }
 
-        private void UserMenu(string username)
-        {
-            Console.WriteLine("1. Logout");
-            Console.WriteLine("2. Change password");
-            Console.WriteLine("3. Enter the Library");
-            Console.Write("Enter your choice: ");
-            int choice = int.Parse(Console.ReadLine());
-
-            switch (choice)
-            {
-                case 1:
-                    Console.WriteLine("Logging out...");
-                    return;
-                case 2:
-                    ChangePasword(username);
-                    return;
-                case 3:
-                    string ssn = currentUser.ssn;
-                    Library library = new Library();
-                    library.UserLibrary(ssn);
-
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Try again.");
-                    break;
-            }
-            UserMenu(username);
-        }
+        
 
         private User GetUserByUsername(string username)
         {

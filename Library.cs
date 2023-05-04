@@ -115,7 +115,7 @@ namespace library
                     
                 case 7:
                     Interface loginSite = new Interface();
-                    loginSite.AdminMenu();
+                    loginSite.AdminMenu(int.Parse(ssn));
 
                     break;
 
@@ -127,9 +127,74 @@ namespace library
         }
 
         //denna e TOM ***** 
-        public void UserLibrary(string ssn)
+        public void UserLibrary(string username, string ssn)
         {
+            
+            Console.WriteLine("1. List all books");
+            Console.WriteLine("2. Lend Book");
+            Console.WriteLine("3. Return Book");
+            Console.WriteLine("4. Search for Books");
+            Console.WriteLine("5. Back");
 
+            Console.Write("Enter your choice: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    ListAllBooks();
+                    break;
+
+                case 2:
+                    LendBook(ssn);
+                    break;
+                
+                case 3: 
+                    ReturnBook(ssn);
+                    break;
+                
+                case 4:
+                    Console.Write("Enter the book you want to search for: ");
+                    string search = Console.ReadLine();
+
+                    List<Book> matchedBooks = SearchBooks(search);
+
+                    if (matchedBooks.Count == 0)
+                    {
+                        Console.WriteLine("No books found matching the search query.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} books found matching the search query:", matchedBooks.Count);
+
+                        int numOfCopies = 0;
+                        foreach (Book book in matchedBooks)
+                        {
+
+                            foreach (Copy copy in copies)
+                            {
+                                if (copy.id == book.id)
+                                {
+                                    numOfCopies++;
+                                }
+                            }
+
+                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: {3}\n ", book.title, book.author, book.genre, numOfCopies);
+                        }
+                    }
+
+                    break;
+                
+                case 5:
+                    Interface loginSite = new Interface();
+                    loginSite.UserMenu(username, int.Parse(ssn));
+                    break;
+                
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+            UserLibrary(username, ssn);
         }
 
         //Gör så att när man söker så tar den och lsitar dom böckerna som kommer upp fint
