@@ -40,7 +40,7 @@ namespace library
         public int ISBN;
         public int ssn;
 
-        public Copy(int ISBN, int id, int ssn)
+        public Copy(int id, int ISBN, int ssn)
         {
             this.id = id;
             this.ISBN = ISBN;

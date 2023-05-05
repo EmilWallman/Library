@@ -11,6 +11,7 @@ using System.Collections.Immutable;
 using System.Runtime.ExceptionServices;
 using System.ComponentModel.Design;
 using System.Threading;
+using System.ComponentModel;
 
 /*
 
@@ -217,21 +218,23 @@ namespace library
                 foreach (Book book in matchedBooks)
                 {
                     
-                    Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre:  {2}\n", book.title, book.author, book.genre);
+                    Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre:  {2}\nID: {3}", book.title, book.author, book.genre, book.id);
                 }
             }
 
-            Console.Write("What book do you want?: ");
-            string lendbook = Console.ReadLine();
+            Console.Write("What book do you want (ID)?: ");
+            int lendbook = Convert.ToInt32(Console.ReadLine());
 
             //Check if book is avalible
 
             int bookId = 0;
+            string title = "";
             foreach(Book book in books)
             {
-                if (book.title == lendbook)
+                if (book.id == lendbook)
                 {
                     bookId = book.id;
+                    title = book.title;
                 }
             }
 
@@ -248,6 +251,8 @@ namespace library
                 }
             }
 
+            
+
 
             foreach(Copy copy in copies)
             {
@@ -258,7 +263,7 @@ namespace library
                     if (copy.ssn == -1)
                     {
                         avalible = true;
-                        Console.WriteLine("The book " + lendbook + " is avalible.");
+                        Console.WriteLine("The book " + title + " is avalible.");
                         Console.WriteLine("Would you like to lend it? y/n");
                         string answer = Console.ReadLine();
                         if (answer.ToLower() == "y")
@@ -443,6 +448,7 @@ namespace library
                     switch(choice)
                     {
                         case 1:
+                            //något e knas
                             foreach(Copy copy in copies)
                             {
                                 if (copy.id == book.id ) 
@@ -538,7 +544,7 @@ namespace library
             int ISBN = 0;
             for (int i = 0; i < copies.Count; i++)
             {
-                ISBN = copies[i].id + 1;
+                ISBN = copies[i].ISBN + 1;
             }
             int check = 0;
             Console.Write("Enter the Title: ");

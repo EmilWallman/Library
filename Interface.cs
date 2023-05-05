@@ -131,6 +131,7 @@ namespace library
             {
                 case 1:
                     Console.WriteLine("Logging out...");
+                    Start();
                     return;
                 case 2:
                     ChangePasword(username, currentSsn);
