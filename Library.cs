@@ -56,6 +56,8 @@ namespace library
                 case 1:
                     //Adds a book to the library, if it already exists it creates a copy
                     AddBooks();
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
 
                 case 2:
@@ -63,23 +65,29 @@ namespace library
                     //WIP
                     
                     DeleteBooks();
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
 
                 case 3:
                     //List all books
                     ListAllBooks();
-
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
 
                 case 4:
                     //Lend a book and if it is already lended to someone it puts you in a queue for all the copies
                     LendBook(currentSsn);
-
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
 
                 case 5:
                     //Return Book
                     ReturnBook(currentSsn);
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
 
                 case 6:
@@ -108,13 +116,18 @@ namespace library
                                 }
                             }
 
-                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: {3}}\n ", book.title, book.author, book.genre, numOfCopies);
+                            Console.WriteLine("Title: {0}\nAuthor: {1}\nGenre: {2}\nNumber Of Copies: " + numOfCopies, book.title, book.author, book.genre, numOfCopies);
                         }
                     }
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
 
                     break;
                     
                 case 7:
+
+                    Console.Clear();
                     Interface loginSite = new Interface();
                     loginSite.AdminMenu(int.Parse(ssn));
 
@@ -122,12 +135,13 @@ namespace library
 
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
             }
             AdminLibrary(ssn);
         }
 
-        //denna e TOM ***** 
         public void UserLibrary(string username, string ssn)
         {
             
@@ -227,7 +241,7 @@ namespace library
 
             //Check if book is avalible
 
-            int bookId = 0;
+            int bookId = -1;
             string title = "";
             foreach(Book book in books)
             {
@@ -251,14 +265,15 @@ namespace library
                 }
             }
 
-            
 
-
-            foreach(Copy copy in copies)
+            int i = 0;
+            int y = 0;
+            foreach (Copy copy in copies)
             {
+                y++;
                 if (copy.id == bookId)
                 {
-                    int i = 0;
+
                     i++;
                     if (copy.ssn == -1)
                     {
@@ -278,9 +293,8 @@ namespace library
                             break;
                         }
                     }
-                    //Går inte in i denna
                     
-                    
+                    //If all copies are occupied
                     if (i == numberOfCopies)
                     {
                         Console.WriteLine("The book " + lendbook + " is not avalible right now.");
@@ -295,7 +309,7 @@ namespace library
                                 Queue queue = new Queue(copy.id, ssnUser);
                                 queues.Add(queue);
                                 SaveQueue(copy.id);
-                                //Lägg till i kön
+                                
                             }
                             if(!File.Exists("queue_" + copy.id + ".txt"))
                             {
@@ -311,6 +325,11 @@ namespace library
                         }
                     }
                 }
+                if (copy.id != bookId && y == copies.Count)
+                {
+                    Console.WriteLine("The book with ID: " + bookId + "does not exist in this library, please check your input and try again");
+                }
+                
             }
         }
 
@@ -406,128 +425,153 @@ namespace library
         {
             Console.WriteLine("All the books: ");
 
-            Console.WriteLine("______________________________________________________");
-            Console.WriteLine("|   Title   |   Author   |   Genre   |   Available   |");
-            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine("______________________________________");
+            Console.WriteLine("|   Title   |   Author   |   Genre   |");
+            Console.WriteLine("-------------------------------------");
 
 
             foreach (Book book in books)
             {
                 
-                Console.WriteLine("|    " + book.title + "   |   " + book.author + "   |   " + book.genre + "   |       |");
-                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.WriteLine("|    " + book.title + "   |   " + book.author + "   |   " + book.genre + "   |");
+                Console.WriteLine("------------------------------------------------------------------------------");
             }
         }
 
-        //Not Working
+        
         public void DeleteBooks()
         {
             ListAllBooks();
             Console.Write("Enter the title of the book that you want to delete: ");
             string title = Console.ReadLine();
-            
-            foreach(Book book in books)
+
+
+            bool delete = false;
+            int numOfCopies = 0;
+            int bookId = -1;
+
+
+            foreach (Book book in books)
             {
-                int numOfCopies = 0;
+
                 if (book.title == title)
                 {
-                    foreach(Copy copy in copies)
+                    delete = true;
+                    bookId = book.id;
+
+                    foreach (Copy copy in copies)
                     {
                         if (copy.id == book.id )
                         {
+
                             numOfCopies++;
                         }
-                    }
-
-                    Console.WriteLine("The book exists and has {0} copies", numOfCopies);
-                    Console.WriteLine();
-                    Console.WriteLine("1. Delete All copies");
-                    Console.WriteLine("2. Delete a sertain number of copies");
-                    int choice = Convert.ToInt32(Console.ReadLine());
-                    
-                    switch(choice)
-                    {
-                        case 1:
-                            //något e knas
-                            foreach(Copy copy in copies)
-                            {
-                                if (copy.id == book.id ) 
-                                {
-                                    copies.Remove(copy);
-                                    SaveCopies();
-                                }
-                            }
-                            books.Remove(book);
-                            SaveBooks();
-                            break;
-                        case 2:
-                            Console.WriteLine("How many copies do you want to remove? ");
-                            int numOfBooksToDelete = Convert.ToInt32(Console.ReadLine());
-                            int i = 0;
-                            int y = 0;
-                            while (i == 0)
-                            {
-                                if (numOfBooksToDelete <= numOfCopies)
-                                {
-                                    foreach (Copy copy in copies)
-                                    {
-                                        if (copy.id == book.id)
-                                        {
-
-                                            if (y == numOfBooksToDelete)
-                                            {
-                                                i = 0;
-                                                break;
-                                            }
-                                            if (copy.ssn == -1)
-                                            {
-                                                copies.Remove(copy);
-                                                y++;
-                                            }
-                                            if (copy.ssn != -1)
-                                            {
-                                                Console.WriteLine("One book is currently lended should we still delete it?");
-                                            }
-
-
-
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("That is more than the number of copies please select an apropriet amount");
-                                    Thread.Sleep(2000);
-                                    Console.Clear();
-                                }
-                            }
-                            
-                            break;
-
-                        default:
-                            break;
-
-                    }
-                    
-                    
+                    }                    
                 }
             }
 
-
-            Book bookToDelete = books.Find(b => b.title == title);
-
-            if (bookToDelete != null)
+            if (delete == true)
             {
-                books.Remove(bookToDelete);
-                SaveBooks();
+                Console.WriteLine("The book has " + numOfCopies + " number of copies");
 
-                Console.WriteLine("Book with title '{0}' deleted successfully.", title);
+                foreach (Book book in books)
+                {
+                    if (book.id == bookId)
+                    {
+                        books.Remove(book);
+                        SaveBooks();
+                        break;
+                    }
+                }
+                
+                for (int i = 0; i < numOfCopies; i++)
+                {
+                    foreach (Copy copy in copies)
+                    {
+                        if (copy.id == bookId)
+                        {
+                            copies.Remove(copy);
+                            SaveCopies();
+                            break;
+                        }
+                    }
+                }
+
+                
             }
 
-            else
+            /*
+            Console.WriteLine("The book exists and has {0} copies", numOfCopies);
+            Console.WriteLine();
+            Console.WriteLine("1. Delete All copies");
+            Console.WriteLine("2. Delete a sertain number of copies");
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
             {
-                Console.WriteLine("Book with title '{0}' not found.", title);
+                case 1:
+                    //något e knas
+                    foreach (Copy copy in copies)
+                    {
+                        if (copy.id == book.id)
+                        {
+                            copies.Remove(copy);
+                            SaveCopies();
+                        }
+                    }
+                    books.Remove(book);
+                    SaveBooks();
+                    break;
+                case 2:
+                    Console.WriteLine("How many copies do you want to remove? There is " + numOfCopies);
+                    int numOfBooksToDelete = Convert.ToInt32(Console.ReadLine());
+                    int i = 0;
+                    int y = 0;
+                    while (i == 0)
+                    {
+                        if (numOfBooksToDelete <= numOfCopies)
+                        {
+                            foreach (Copy copy in copies)
+                            {
+                                if (copy.id == bookId)
+                                {
+
+                                    if (y == numOfBooksToDelete)
+                                    {
+                                        i = 0;
+                                        break;
+                                    }
+                                    if (copy.ssn == -1)
+                                    {
+                                        copies.Remove(copy);
+                                        y++;
+                                    }
+                                    if (copy.ssn != -1)
+                                    {
+                                        Console.WriteLine("One book is currently lended should we still delete it?");
+                                    }
+
+
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("That is more than the number of copies please select an apropriet amount");
+                            Thread.Sleep(2000);
+                            Console.Clear();
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+
             }
+            */
+
         }
 
         public void AddBooks()

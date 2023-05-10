@@ -98,21 +98,29 @@ namespace library
             {
                 case 1:
                     EditUsers(currentSsn);
+                    Console.Clear();
                     break;
 
                 case 2:
                     //Going to the library
+                    Console.Clear();
                     Library library = new Library();
                     library.AdminLibrary(Convert.ToString(currentSsn));
+                    
                     return;
 
                 case 3:
                     Console.WriteLine("Logging out...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     Start();
                     return;
 
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+
                     break;
             }
             AdminMenu(currentSsn);
@@ -131,19 +139,27 @@ namespace library
             {
                 case 1:
                     Console.WriteLine("Logging out...");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     Start();
                     return;
                 case 2:
                     ChangePasword(username, currentSsn);
+                    Thread.Sleep(2000);
+                    Console.Clear();
+
                     return;
                 case 3:
-                    
+
+                    Console.Clear();
                     Library library = new Library();
                     library.UserLibrary(username, Convert.ToString(currentSsn));
 
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     break;
             }
             UserMenu(username, currentSsn);

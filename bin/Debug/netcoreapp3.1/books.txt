@@ -1,1 +1,5 @@
-0,Test,test,test
+0,To Kill a Mockingbird,Harper Lee,Classic
+1,1984,George Orwell,Dystopian
+2,The Catcher in the Rye,J.D. Salinger,Coming-of-age
+3,The Great Gatsby,F. Scott Fitzgerald,Classic
+4,Animal Farm,George Orwell,Political satire
