@@ -13,9 +13,7 @@ using System.ComponentModel.Design;
 using System.Threading;
 using System.ComponentModel;
 
-/*
 
-*/
 
 namespace library
 {
@@ -34,7 +32,6 @@ namespace library
             copies = new List<Copy>();
             LoadCopies();
             LoadBooks();
-            //LoadQue();
         }
 
         public void AdminLibrary(string ssn)
@@ -61,9 +58,6 @@ namespace library
                     break;
 
                 case 2:
-
-                    //WIP
-                    
                     DeleteBooks();
                     Thread.Sleep(2000);
                     Console.Clear();
@@ -212,7 +206,7 @@ namespace library
             UserLibrary(username, ssn);
         }
 
-        //Gör så att när man söker så tar den och lsitar dom böckerna som kommer upp fint
+        
         public void LendBook(string ssn)
         {
             int ssnUser = Int32.Parse(ssn);
@@ -420,7 +414,7 @@ namespace library
 
         }
 
-        //Funkar typ behöver fixas till lite
+        
         public void ListAllBooks()
         {
             Console.WriteLine("All the books: ");
@@ -500,77 +494,7 @@ namespace library
                 
             }
 
-            /*
-            Console.WriteLine("The book exists and has {0} copies", numOfCopies);
-            Console.WriteLine();
-            Console.WriteLine("1. Delete All copies");
-            Console.WriteLine("2. Delete a sertain number of copies");
-            int choice = Convert.ToInt32(Console.ReadLine());
-
-            switch (choice)
-            {
-                case 1:
-                    //något e knas
-                    foreach (Copy copy in copies)
-                    {
-                        if (copy.id == book.id)
-                        {
-                            copies.Remove(copy);
-                            SaveCopies();
-                        }
-                    }
-                    books.Remove(book);
-                    SaveBooks();
-                    break;
-                case 2:
-                    Console.WriteLine("How many copies do you want to remove? There is " + numOfCopies);
-                    int numOfBooksToDelete = Convert.ToInt32(Console.ReadLine());
-                    int i = 0;
-                    int y = 0;
-                    while (i == 0)
-                    {
-                        if (numOfBooksToDelete <= numOfCopies)
-                        {
-                            foreach (Copy copy in copies)
-                            {
-                                if (copy.id == bookId)
-                                {
-
-                                    if (y == numOfBooksToDelete)
-                                    {
-                                        i = 0;
-                                        break;
-                                    }
-                                    if (copy.ssn == -1)
-                                    {
-                                        copies.Remove(copy);
-                                        y++;
-                                    }
-                                    if (copy.ssn != -1)
-                                    {
-                                        Console.WriteLine("One book is currently lended should we still delete it?");
-                                    }
-
-
-
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("That is more than the number of copies please select an apropriet amount");
-                            Thread.Sleep(2000);
-                            Console.Clear();
-                        }
-                    }
-
-                    break;
-
-                default:
-                    break;
-
-            }
-            */
+            
 
         }
 
@@ -602,7 +526,7 @@ namespace library
                 {
                     Console.WriteLine("This book already exists in the system, creating a copy");
 
-                    //individuellt
+                    
                     check = 1;
                     id = book.id;
                     if (check == 1)
@@ -644,7 +568,7 @@ namespace library
 
         }
 
-        //Funkar nästan behöver bara fixas till lite
+        
 
         
         public List<Book> SearchBooks(string searchTerm)
@@ -678,41 +602,7 @@ namespace library
             return matchingBooks;
         }
 
-        /*
-         public List<Book> SearchBooks(string searchTerm)
-        {
-            const int MAX_DISTANCE = 2; // Maximum Levenshtein distance for a match
-
-            // Check if the search term is a valid integer value
-            int isbn;
-            bool isNumeric = int.TryParse(searchTerm, out isbn);
-
-            // Search for books that match the search term in the title, author, genre, or ISBN
-            List<Book> matchingBooks = books.Where(b =>
-                b.title.ToLower().Contains(searchTerm.ToLower()) ||
-                b.author.ToLower().Contains(searchTerm.ToLower()) ||
-                b.genre.ToLower().Contains(searchTerm.ToLower()) ||
-                (isNumeric && b.ISBN == isbn)
-            ).ToList();
-
-            // Search for close matches using Levenshtein distance
-            int distance;
-            foreach (Book book in books)
-            {
-                distance = ComputeLevenshteinDistance(book.title.ToLower(), searchTerm.ToLower());
-                distance = ComputeLevenshteinDistance(book.author.ToLower(), searchTerm.ToLower());
-                distance = ComputeLevenshteinDistance(book.genre.ToLower(), searchTerm.ToLower());
-
-                if ((distance <= MAX_DISTANCE && !matchingBooks.Contains(book)) || book.ISBN == isbn)
-                {
-                    matchingBooks.Add(book);
-                }
-            }
-
-            return matchingBooks;
-        }
         
-        */
 
         private static int ComputeLevenshteinDistance(string s, string t)
         {

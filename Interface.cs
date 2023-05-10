@@ -5,30 +5,7 @@ using System.IO;
 using System.Threading;
 using library;
 
-/*
-To Do:
 
-Ta Bort användare
-Användare ska kunna ändra sina lösenord
-
-Ta bort Böcker
-Låna Böcker
-Lämna tillbaka Böker
-Reservera Böcker
-
-Lägg till Console.Clear
-Lägg till Thread.Sleep
-
-Ändra alla namn till interface osv
-En klass för AdminMenu
-En klass för User
-En klass för loggin o skapa konto osv (start meny)
-En klass för Bibliotek
-
-Ta bort filer som inte används
-
-
-*/
 
 namespace library
 {
@@ -69,7 +46,7 @@ namespace library
                         Login(); 
                         break;
                     case 2:
-                        //Funkar men behöver bli lite finare med sleep
+                        
                         Console.Clear();
                         CreateAccount();
                         break;
@@ -183,7 +160,7 @@ namespace library
             {
                 case 1:
                     //Change status
-                    //Funkar men behöver bli lite finare med sleep
+                    
                     ListAllUsers();
                     Console.Write("Enter the username:");
                     string questionUsername = Console.ReadLine();
@@ -218,7 +195,6 @@ namespace library
                 case 4:
                     //Change password
 
-                    //Funkar men behöver bli lite finare med sleep
                     ListAllUsers();
                     Console.Write("Enter the username: ");
                     string usernameChoise = Console.ReadLine();
@@ -229,7 +205,7 @@ namespace library
                 case 5:
                     //Remove user
 
-                    //Funkar men behöver bli lite finare med sleep
+
                     DeleteUser();
                     break;
 
